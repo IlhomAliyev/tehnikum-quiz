@@ -1,40 +1,61 @@
-import React from "react";
+import React, { useState } from "react";
+import { Button } from "../components/Button";
+
+import { Heading } from "../components/Heading";
+import { Input } from "../components/Input";
 
 const Welcome = () => {
+  const [nameValue, setNameValue] = useState("");
+  const [phoneValue, setPhoneValue] = useState("");
+
+  const [nameError, setNameError] = useState(false);
+  const [phoneError, setPhoneError] = useState(false);
+
+  const clickHandler = () => {
+    if (!nameValue) {
+      setNameError(true);
+    } else {
+      setNameError(false);
+    }
+
+    if (!phoneValue) {
+      setPhoneError(true);
+    } else {
+      setPhoneError(false);
+    }
+  };
+
   return (
     <div className="container">
       <div className="wrapper">
         <div className="welcome">
-          <h1>Добро пожаловать в квиз от лучшего учебного центра</h1>
+          <Heading
+            headingType="h1"
+            text="Добро пожаловать в квиз от лучшего учебного центра"
+          />
           <form className="welcome__form">
-            <label className="input-wrapper" htmlFor="username">
-              Ваше имя
-              <input
-                required
-                type="text"
-                name="username"
-                id="username"
-                placeholder="Ваш ответ"
-              />
-              <span id="error-message">
-                Введите номер в правильном формате например
-              </span>
-            </label>
-            <label className="input-wrapper" htmlFor="username">
-              Ваш номер
-              <input
-                required
-                type="tel"
-                name="phone"
-                id="phone"
-                placeholder="+998 9- --- -- -- "
-                pattern="^(?:\+998)?(?:\d{2})?(?:\d{7})$"
-              />
-              <span id="error-message">Введите номер в правильном формате</span>
-            </label>
-            <button disabled type="submit" id="next-btn">
-              Далее
-            </button>
+            <Input
+              hasError={nameError}
+              value={nameValue}
+              onChange={setNameValue}
+              id="username"
+              isRequired
+              inputLabel="Ваше имя"
+              inputPlaceholder="Ваш ответ"
+              errorMessage="Введите ваше имя"
+            />
+            <Input
+              hasError={phoneError}
+              value={phoneValue}
+              onChange={setPhoneValue}
+              id="phone"
+              isRequired
+              inputLabel="Ваше номер"
+              inputPlaceholder="Ваш ответ"
+              errorMessage="Введите номер в правильном формате"
+            />
+            <label className="input-wrapper" htmlFor="username"></label>
+            <Button onClick={clickHandler} buttonType="button" />
           </form>
         </div>
       </div>
